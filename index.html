@@ -5,7 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <style>*{
+      margin: 0;
+      padding: 0;
+    }
+    body {
+        background: #E1E1E1;
+        display: flex;
+        font-family: sans-serif;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        min-height: 100vh;
+    }
+    .from{
+      background: white;
+      box-shadow: 0px 0px 10px gray;
+      padding: 20px;
+      width: 315px;
+      border-radius: 10px;
+    }
+    h1{
+      text-align: center;
+      font-size: 18px;
+      color: #000000;
+    }
+    .link{
+        width: 300px;
+        height: 30px;
+        margin-top: 15px;
+        text-align: center;
+        border: 2px solid #000000;
+        border-radius: 5px;
+        padding: 5px;
+        color: #000000;
+    }
+    .link::placeholder{
+      color: #000000;
+    }
+    .Get{
+        width: 314px;
+        display: block;
+        background-color: #1B1B1B;
+        border: none;
+        padding: 5px;
+        font-size: 18px;
+        color: #fff;
+        font-weight: 600;
+        padding: 12px 25px;
+        margin-top: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+    }
+    .hidden{
+      display: none;
+    }
+    .hidden.active{
+      display: block;
+    }</style>
     
 </head>
 <body>
@@ -14,12 +73,65 @@
            <h1>YouTube Music Downloader</h1>
             <input type="text" class="link YouTube" placeholder="Enter Your YouTube Url..." />
            <button class="Get" onclick="Get()">Get</button>
+           
           <div class="hidden">
             <input type="url" class="link idList" hidden>
             <input type="url" class="link form-control"  hidden>
             <button type="submit" class="Get" onclick="download()">Download</button>
+            <button class="Get" onClick="window.location.reload();">Refresh Page</button>
           </div>
        </div>
-       <script src="main.js"></script>
+       <script >var YouTube = document.querySelector('.YouTube');
+        var idList = document.querySelector('.idList');
+        var hidden = document.querySelector('.hidden');
+        function Get(){
+             if(YouTube.value.indexOf("https://youtu.be/") != -1){
+               var YTurl = YouTube.value.replace("https://youtu.be/","");
+               document.querySelector('.idList').value = YTurl;
+               Music();
+             }
+             else if(YouTube.value.indexOf("https://www.youtube.com/watch?v=") != -1){
+                var YTurl = YouTube.value.replace("https://www.youtube.com/watch?v=","");
+                document.querySelector('.idList').value = YTurl;
+                Music();
+              }
+             else if(YouTube.value.indexOf("https://youtube.com/shorts/") != -1){
+               var YTurl = YouTube.value.replace("https://youtube.com/shorts/","");
+               var YTurl2 = YTurl.replace("?feature=share","");
+               document.querySelector('.idList').value = YTurl2;
+               Music();
+             }
+             else{
+               alert('Enter Your YouTube Url...');
+             }
+        }
+        function Music() {
+              const options = {
+                method: 'GET',
+                headers: {
+                  'X-RapidAPI-Key': '0a36b247edmshc6d96d35b57585ap1da3a7jsn2e6888094b49 ',
+                  'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
+                }
+              };
+              var urlLink = 'https://youtube-mp36.p.rapidapi.com/dl?id='+idList.value;
+              fetch(urlLink, options).then((response)=>{
+                   return response.json();
+               }).then((data)=>{
+                 console.log(data);
+                 hidden.classList.add('active');
+                 document.querySelector('.form-control').value = data.link;
+                }).catch(err => console.error(err));
+        }
+        
+        var url = document.querySelector('.form-control');
+        function download(){
+              const anchor = document.createElement("a");
+              anchor.href =  url.value;
+              anchor.download = 'MWC.mp3';
+              document.body.appendChild(anchor);
+              anchor.click();
+              document.body.removeChild(anchor);
+         }
+         </script>
 </body>
 </html>
