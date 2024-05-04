@@ -58,3 +58,21 @@
   .hidden.active{
     display: block;
   }
+  .video-thumbnail{
+      width: 310px;
+      
+      background-color: #1B1B1B;
+      border: none;
+      padding: 2px;
+      font-size: 18px;
+      color: #fff;
+      font-weight: 600;
+     
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+  justify-content: center; /* Đặt nội dung ở giữa theo chiều ngang */
+  align-items: center;
+  }
