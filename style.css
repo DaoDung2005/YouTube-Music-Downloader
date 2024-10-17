@@ -51,6 +51,21 @@
   .link::placeholder{
     color: #000000;
   }
+  .Get_1{
+      width: 314px;
+      display: none;
+      background-color: #1B1B1B;
+      border: none;
+      padding: 5px;
+      font-size: 18px;
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 25px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      outline: none;
+  }
   .Get{
       width: 314px;
       display: block;
